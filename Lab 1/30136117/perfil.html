@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>César Carios</title>
+    <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-icon">
+    <style>
+        body{
+            font-family: 'Times New Roman', serif;
+            line-height: 1.4;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .contenedor-principal{
+            display: flex;
+            align-items: stretch; 
+            gap: 30px;
+        }
+
+        .foto-perfil{
+            width: 150px;
+            height: auto; 
+            border-radius: 15px 0 0 0;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            align-self: stretch; 
+        }
+
+        .cuadro-texto{
+            flex: 1;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%; 
+        }
+
+        
+        .nombre{
+            font-size: 30px;
+            color: #5405ff;
+            margin-bottom: -10px;
+            font-weight: normal;
+        }
+
+        .descripcion{
+            font-style: italic;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .detalles{
+            margin-top: 15px;
+        }
+
+        .detalles ul{
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .detalles li{
+            margin-bottom: 5px;
+        }
+
+        .contacto{
+            margin-top: auto; 
+            padding-top: 15px;
+        }
+
+        .email-link{
+            color: orange;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .email-link:hover{
+            text-decoration: underline;
+            color: #e67e22;
+        }
+
+        .email-link:visited{
+            color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenedor-principal">
+        <img src="30136117.jpg" alt="Foto de César Carios" class="foto-perfil">
+
+        <div class="cuadro-texto">
+            <div class="nombre">César Miguel Carios Brancovic</div>
+            <p class="descripcion">
+                Soy estudiante de la Licenciatura en Computación en la Facultad de Ciencias de la Universidad
+                Central de Venezuela. Actualmente estoy en el 6to semestre de la carrera y me interesan las ramas
+                de bases de datos e inteligencia artificial. También me gusta dar clases, por eso soy preparador
+                de la asignatura Matemáticas Discretas I. En mis ratos libres me gusta leer y hacer deporte.
+            </p>
+
+            <div class="detalles">
+                <ul>
+                    <li>Mi color favorito es: Azul/Morado</li>
+                    <li>Mi libro favorito es: Los Miserables</li>
+                    <li>Estilo de música preferida es: Rock</li>
+                    <li>Mis videojuegos favoritos son: Pokemon, The Legend of Zelda, Fire Emblem</li>
+                    <li><strong>Lenguajes aprendidos: C++, C, Python, SQL</li></strong>
+                </ul>
+            </div>
+
+            <div class="contacto">
+                Si necesitan comunicarse conmigo pueden escribirme a: 
+                <a href="mailto:ccariosmcb@gmail.com" class="email-link">ccariosmcb@gmail.com</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
