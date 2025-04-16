@@ -101,7 +101,7 @@ nav li:nth-child(2) {
 }
 
 .student-card span {
-    color: #2a5caa; /* Color azul corporativo */
+    color: #2a5caa; 
     font-weight: bold;
 }
 
@@ -119,4 +119,44 @@ footer {
     color: #ffffff;
     font-size: 0.9em;
     background-color: rgb(67, 184, 210);
+}
+
+.student-card {
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    position: relative;
+}
+
+.student-card:hover {
+    background-color: #99c5dd;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.student-img {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.student-card:hover .student-img {
+    transform: scale(1.05) rotate(3deg);
+    filter: brightness(1.1);
+}
+
+.student-card span {
+    transition: all 0.3s ease-out;
+    display: inline-block;
+}
+
+.student-card:hover span {
+    transform: scale(1.02) rotate(-2deg);
+    color: #2a5caa;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.student-card:hover {
+    animation: float 1.5s ease-in-out infinite;
 }
