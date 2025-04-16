@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATI[UCV] 2025-1</title>
+    <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: rgb(67, 184, 210);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            justify-content: center;
+        }
+
+        nav li:not(:last-child) {
+            border-right: 2px solid #ddd;
+            padding-right: 20px;
+        }
+
+        nav li:nth-child(2) {
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        
+        .ucv {
+            font-size: 0.5em;
+            vertical-align: middle;
+            color: #ffffff;
+        }
+
+        .search-form input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .search-form input[type="submit"] {
+            padding: 8px 15px;
+            background-color: #ffffff;
+            color: rgb(67, 184, 210);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            padding: 10px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .student-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #b5b1b1;
+            border-radius: 4px;
+            transition: transform 0.2s;
+            background-color: #d3dbe2;
+            height: auto;
+        }
+
+        .student-img {
+            width: 100px;
+            height: 150px;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .student-card span {
+            text-align: center;
+            font-size: 0.9em;
+            width: 100%;
+            padding: 0 5px;
+        }
+
+        .student-card span {
+            color: #2a5caa; /* Color azul corporativo */
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .student-grid {           
+                height: 180px; 
+             }
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 20px;
+            border-top: 2px solid #ddd;
+            color: #ffffff;
+            font-size: 0.9em;
+            background-color: rgb(67, 184, 210);
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <strong class="header-title">ATI<span class="ucv">[UCV]</span> 2025-1</strong>
+                </li>
+                <li>Hola, César Carios</li>
+                <li>
+                    <form class="search-form">
+                        <input type="text" placeholder="Nombre...">
+                        <input type="submit" value="Buscar">
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="student-grid">
+            <div class="student-card">
+                <img src="30136117/30136117.jpg" class="student-img">
+                <span>César Carios</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy6/dummy.jpg" alt="Juan" class="student-img">
+                <span>Juan Antonio Perez</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy3/dummy.jpg" alt="Maritza" class="student-img">
+                <span>Maritza Rodriguez</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy1/dummy.jpg" alt="Emilia" class="student-img">
+                <span>Emilia Casado</span>
+            </div>
+
+            <div class="student-card">
+                <img src="dummy4/dummy.jpg" alt="Enrique" class="student-img">
+                <span>Enrique Colina</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy2/dummy.jpg" alt="María" class="student-img">
+                <span>María Elena Pinto</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy5/dummy.jpg" alt="Ronald" class="student-img">
+                <span>Ronald Gutierrez</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy6/dummy.jpg" alt="Juan" class="student-img">
+                <span>Juan Antonio Perez</span>
+            </div>
+
+            <div class="student-card">
+                <img src="dummy3/dummy.jpg" alt="Maritza" class="student-img">
+                <span>Maritza Rodriguez</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy1/dummy.jpg" alt="Emilia" class="student-img">
+                <span>Emilia Casado</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy4/dummy.jpg" alt="Enrique" class="student-img">
+                <span>Enrique Colina</span>
+            </div>
+            <div class="student-card">
+                <img src="dummy2/dummy.jpg" alt="María" class="student-img">
+                <span>María Elena Pinto</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        Copyright © 2025 Escuela de computación - ATI. Todos los derechos reservados
+    </footer>
+</body>
+</html>
