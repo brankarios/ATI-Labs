@@ -1,3 +1,5 @@
+/* Estilos para index.html */
+
 body {
     font-family: Arial, sans-serif;
     max-width: 1000px;
@@ -159,4 +161,91 @@ footer {
 
 .student-card:hover {
     animation: float 1.5s ease-in-out infinite;
+}
+
+/* Estilos para perfil.html */
+
+body{
+    font-family: 'Times New Roman', serif;
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.contenedor-principal{
+    display: flex;
+    align-items: stretch; 
+    gap: 30px;
+}
+
+#foto-perfil{
+    width: 150px;
+    height: auto; 
+    border-radius: 15px 0 0 0;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    align-self: stretch; 
+}
+
+.cuadro-texto{
+    flex: 1;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%; 
+}
+
+
+.nombre{
+    font-size: 30px;
+    color: #5405ff;
+    margin-bottom: -10px;
+    font-weight: normal;
+}
+
+.descripcion{
+    font-style: italic;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.detalles{
+    margin-top: 15px;
+}
+
+.detalles ul{
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.detalles li{
+    margin-bottom: 5px;
+}
+
+.contacto{
+    margin-top: auto; 
+    padding-top: 15px;
+}
+
+.email-link{
+    color: orange;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.email-link:hover{
+    text-decoration: underline;
+    color: #e67e22;
+}
+
+.email-link:visited{
+    color: #c0392b;
 }
