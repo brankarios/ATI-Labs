@@ -10,7 +10,7 @@
 
 <body>
     <div class="contenedor-principal">
-        <img src="30136117.jpg" alt="Foto de César Carios" id="foto-perfil">
+        <img src="CEDULAGrande.jpg" alt="Foto de César Carios" id="foto-perfil">
 
         <div class="cuadro-texto">
             <div class="nombre">César Miguel Carios Brancovic</div>
@@ -33,9 +33,14 @@
 
             <div class="contacto">
                 Si necesitan comunicarse conmigo pueden escribirme a: 
-                <a href="mailto:ccariosmcb@gmail.com" class="email-link">ccariosmcb@gmail.com</a>
+                <a href="mailto:ccariosmcb@gmail.com" class="email-link" onclick="changeLinkColor(this)">ccariosmcb@gmail.com</a>
             </div>
         </div>
     </div>
+    <script>
+        function changeLinkColor(link){
+            link.style.color = 'red'; 
+        }
+    </script>
 </body>
 </html>
