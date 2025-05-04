@@ -3,41 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Perfil del Estudiante</title>
     <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <div class="contenedor-principal">
-        <img src="" alt="" id="foto-perfil">
+        <img src="" alt="Foto de perfil" id="foto-perfil">
 
         <div class="cuadro-texto">
-            <div class="nombre"></div>
-            <p class="descripcion">
-                
-            </p>
+            <div class="nombre" id="nombre-perfil"></div>
+            <p class="descripcion" id="descripcion-perfil"></p>
 
             <div class="detalles">
                 <ul>
-                    <li>Mi color favorito es:</li>
-                    <li>Mi libro favorito es:</li>
-                    <li>Mi estilo de música preferido:</li>
-                    <li>Videojuegos favoritos:</li>
-                    <li><strong>Lenguajes aprendidos:</strong></li>
+                    <li><span>Mi color favorito es: </span><span id="color-perfil"></span></li>
+                    <li><span>Mi libro favorito es: </span><span id="libro-perfil"></span></li>
+                    <li><span>Mi estilo de música preferido: </span><span id="musica-perfil"></span></li>
+                    <li><span>Videojuegos favoritos: </span><span id="juegos-perfil"></span></li>
+                    <li><strong>Lenguajes aprendidos: </strong><span id="lenguajes-perfil"></span></li>
                 </ul>
             </div>
 
             <div class="contacto">
                 Si necesitan comunicarse conmigo pueden escribirme a: 
-                <a href="" class="email-link" onclick="changeLinkColor(this)"></a>
+                <a href="" class="email-link" id="email-perfil" onclick="changeLinkColor(this)"></a>
             </div>
         </div>
     </div>
+
     <script>
         function changeLinkColor(link){
             link.style.color = 'red'; 
         }
+
+        // Estudiante desde la URL para el perfil 
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const ci = urlParams.get('ci');
+    
+    if (!ci) return;
+
+    try {
+        // Cargar lista de estudiantes
+        const estudiantesResponse = await fetch('datos/index.json');
+        const estudiantesText = await estudiantesResponse.text();
+        const estudiantesJson = estudiantesText.replace('const perfil=', '').trim();
+        const estudiantes = JSON.parse(estudiantesJson);
+        
+        // Buscar estudiante
+        const estudiante = estudiantes.find(e => e.ci == ci);
+        if (!estudiante) return;
+
+        // Mostrar datos básicos
+        document.getElementById('foto-perfil').src = estudiante.imagen;
+        document.getElementById('nombre-perfil').textContent = estudiante.nombre;
+        document.title = `Perfil de ${estudiante.nombre}`;
+
+        // Cargar detalles del perfil si existe
+        try {
+            const perfilResponse = await fetch(`datos/${ci}/perfil.json`);
+            const perfilText = await perfilResponse.text();
+            const perfilJson = perfilText.replace('const config=', '').trim();
+            const perfil = JSON.parse(perfilJson);
+
+            // Mostrar detalles
+            document.getElementById('descripcion-perfil').textContent = perfil.descripcion || '';
+            document.getElementById('color-perfil').textContent = perfil.color || '';
+            document.getElementById('libro-perfil').textContent = perfil.libro || '';
+            document.getElementById('musica-perfil').textContent = perfil.musica || '';
+            document.getElementById('juegos-perfil').textContent = perfil.video_juego || '';
+            document.getElementById('lenguajes-perfil').textContent = perfil.lenguajes || '';
+            
+            if (perfil.email) {
+                document.getElementById('email-perfil').textContent = perfil.email;
+                document.getElementById('email-perfil').href = `mailto:${perfil.email}`;
+            }
+        } catch (e) {
+            // No hay archivo de perfil específico
+        }
+    } catch (error) {
+        console.log('Error:', error);
+    }
+});
     </script>
 </body>
 </html>

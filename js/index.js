@@ -1,12 +1,15 @@
 // Script para cambiar el idioma
-
-const LANGUAGE = 'ES';
+const LANGUAGE = 'ES'; // Puedes cambiar a 'EN' o 'PT'
 
 async function loadConfig(lang) {
     try {
         const response = await fetch(`conf/config${lang}.json`);
         if (!response.ok) throw new Error('Error al cargar el JSON');
-        return await response.json();
+        
+        // Extraemos el contenido JSON del archivo que contiene "const config" para que no nos de error
+        const configText = await response.text();
+        const configJsonStr = configText.match(/\{[\s\S]*\}/)[0]; 
+        return JSON.parse(configJsonStr);
     } catch (error) {
         console.error('Error cargando el idioma:', error);
         return null;
@@ -37,17 +40,16 @@ async function applyLanguage(lang) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    applyLanguage(LANGUAGE); 
-});
-
-// Script para cambiar las fotos de perfil
-
-document.addEventListener('DOMContentLoaded', async () => {
+// Script para cargar estudiantes
+async function loadStudents() {
     try {
         const response = await fetch('datos/index.json');
         if (!response.ok) throw new Error('Error al cargar los datos de estudiantes');
-        const students = await response.json();
+        
+        // Extremos el array JSON del archivo que contiene "const perfiles" para que no nos de error
+        const studentsText = await response.text();
+        const studentsJsonStr = studentsText.match(/\[[\s\S]*\]/)[0]; 
+        const students = JSON.parse(studentsJsonStr);
 
         const studentGrid = document.querySelector('.student-grid');
         if (!studentGrid) throw new Error('No se encontró el contenedor .student-grid');
@@ -59,10 +61,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             studentCard.className = 'student-card';
 
             const img = document.createElement('img');
-            img.className = `student-img student-img${(index % 6) + 1}`; // Rotar clases para variedad visual
-            img.src = `${student.imagen}`; 
+            img.className = `student-img student-img${(index % 6) + 1}`;
+            img.src = student.imagen;
             img.alt = `Foto de ${student.nombre}`;
-            img.loading = 'lazy'; // Optimización para carga diferida
+            img.loading = 'lazy';
 
             const span = document.createElement('span');
             span.textContent = student.nombre;
@@ -82,4 +84,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         errorElement.style.padding = '20px';
         document.querySelector('main').appendChild(errorElement);
     }
+}
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    applyLanguage(LANGUAGE);
+    loadStudents();
 });

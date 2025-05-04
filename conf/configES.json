@@ -1,4 +1,4 @@
-{
+const config = {
 	"sitio": ["ATI","[UCV]","2025-1"],
 	"home": "Inicio",
 	"login": "Entrar",
