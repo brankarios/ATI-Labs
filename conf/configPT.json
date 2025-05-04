@@ -12,5 +12,6 @@ const config= {
 	"lenguajes":"Linguagems aprendidas",
 	"email":"Se precisar me contatar pode me escrever em [email]",
 	"buscar": "Procurar",
-	"saludo": "Olá"
+	"saludo": "Olá",
+	"noResults": "Não há alunos que tenham em seu nome:"
 }
