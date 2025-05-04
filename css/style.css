@@ -262,7 +262,6 @@ body{
     }
 
     #foto-perfil{
-        content:url(../30136117/30136117Pequena.jpg);
         width: auto;
         max-width: 30vw; 
         height: 100%;
@@ -432,73 +431,12 @@ body{
 
     }
 
-      
-    .principal-student{
-
-        content:url(../30136117/30136117Pequena.jpg);
-    }
-
-    .student-img1{
-        content:url(../dummies/dummy1/dummyPequeno.jpg);
-    }
-
-    .student-img2{
-        content:url(../dummies/dummy2/dummyPequeno.jpg);
-    }
-
-    .student-img3{
-        content:url(../dummies/dummy3/dummyPequeno.jpg);
-    }
-
-    .student-img4{
-        content:url(../dummies/dummy4/dummyPequeno.jpg);
-    }
-
-    .student-img5{
-        content:url(../dummies/dummy5/dummyPequeno.jpg);
-    }
-
-    .student-img6{
-        content:url(../dummies/dummy6/dummyPequeno.jpg);
-    }
 }
 
 /* Tablets (481px - 768px) */
 @media screen and (min-width: 481px) and (max-width: 768px) {
    
-.principal-student{
 
-    content:url(../30136117/30136117Pequena.jpg);
-}
-
-.principal-student{
-
-    content:url(../30136117/30136117Pequena.jpg);
-}
-
-.student-img1{
-    content:url(../dummies/dummy1/dummyPequeno.jpg);
-}
-
-.student-img2{
-    content:url(../dummies/dummy2/dummyPequeno.jpg);
-}
-
-.student-img3{
-    content:url(../dummies/dummy3/dummyPequeno.jpg);
-}
-
-.student-img4{
-    content:url(../dummies/dummy4/dummyPequeno.jpg);
-}
-
-.student-img5{
-    content:url(../dummies/dummy5/dummyPequeno.jpg);
-}
-
-.student-img6{
-    content:url(../dummies/dummy6/dummyPequeno.jpg);
-}
  
 }
 
