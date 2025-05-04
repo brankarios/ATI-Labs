@@ -18,76 +18,104 @@
 
             <div class="detalles">
                 <ul>
-                    <li><span>Mi color favorito es: </span><span id="color-perfil"></span></li>
-                    <li><span>Mi libro favorito es: </span><span id="libro-perfil"></span></li>
-                    <li><span>Mi estilo de música preferido: </span><span id="musica-perfil"></span></li>
-                    <li><span>Videojuegos favoritos: </span><span id="juegos-perfil"></span></li>
-                    <li><strong>Lenguajes aprendidos: </strong><span id="lenguajes-perfil"></span></li>
+                    <li><span id="texto-color">Mi color favorito es: </span><span id="color-perfil"></span></li>
+                    <li><span id="texto-libro">Mi libro favorito es: </span><span id="libro-perfil"></span></li>
+                    <li><span id="texto-musica">Mi estilo de música preferido: </span><span id="musica-perfil"></span></li>
+                    <li><span id="texto-juegos">Videojuegos favoritos: </span><span id="juegos-perfil"></span></li>
+                    <li><strong id="texto-lenguajes">Lenguajes aprendidos: </strong><span id="lenguajes-perfil"></span></li>
                 </ul>
             </div>
 
             <div class="contacto">
-                Si necesitan comunicarse conmigo pueden escribirme a: 
+                <span id="texto-contacto">Si necesitan comunicarse conmigo pueden escribirme a: </span>
                 <a href="" class="email-link" id="email-perfil" onclick="changeLinkColor(this)"></a>
             </div>
         </div>
     </div>
 
     <script>
-        function changeLinkColor(link){
+        function changeLinkColor(link) {
             link.style.color = 'red'; 
         }
 
-        // Estudiante desde la URL para el perfil 
-
-document.addEventListener('DOMContentLoaded', async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const ci = urlParams.get('ci');
-    
-    if (!ci) return;
-
-    try {
-        // Cargar lista de estudiantes
-        const estudiantesResponse = await fetch('datos/index.json');
-        const estudiantesText = await estudiantesResponse.text();
-        const estudiantesJson = estudiantesText.replace('const perfil=', '').trim();
-        const estudiantes = JSON.parse(estudiantesJson);
-        
-        // Buscar estudiante
-        const estudiante = estudiantes.find(e => e.ci == ci);
-        if (!estudiante) return;
-
-        // Mostrar datos básicos
-        document.getElementById('foto-perfil').src = estudiante.imagen;
-        document.getElementById('nombre-perfil').textContent = estudiante.nombre;
-        document.title = `Perfil de ${estudiante.nombre}`;
-
-        // Cargar detalles del perfil si existe
-        try {
-            const perfilResponse = await fetch(`datos/${ci}/perfil.json`);
-            const perfilText = await perfilResponse.text();
-            const perfilJson = perfilText.replace('const config=', '').trim();
-            const perfil = JSON.parse(perfilJson);
-
-            // Mostrar detalles
-            document.getElementById('descripcion-perfil').textContent = perfil.descripcion || '';
-            document.getElementById('color-perfil').textContent = perfil.color || '';
-            document.getElementById('libro-perfil').textContent = perfil.libro || '';
-            document.getElementById('musica-perfil').textContent = perfil.musica || '';
-            document.getElementById('juegos-perfil').textContent = perfil.video_juego || '';
-            document.getElementById('lenguajes-perfil').textContent = perfil.lenguajes || '';
-            
-            if (perfil.email) {
-                document.getElementById('email-perfil').textContent = perfil.email;
-                document.getElementById('email-perfil').href = `mailto:${perfil.email}`;
-            }
-        } catch (e) {
-            // No hay archivo de perfil específico
+        // Función para extraer JSON de archivos con declaración de variable
+        function extractJSON(text) {
+            const match = text.match(/[\{\[]([\s\S]*)[\}\]]/);
+            return match ? JSON.parse(match[0]) : null;
         }
-    } catch (error) {
-        console.log('Error:', error);
-    }
-});
+
+        // Cargar configuración de idioma
+        async function loadLanguageConfig(lang) {
+            try {
+                const response = await fetch(`conf/config${lang}.json`);
+                const configText = await response.text();
+                return extractJSON(configText);
+            } catch (error) {
+                console.error('Error cargando idioma:', error);
+                return null;
+            }
+        }
+
+        function updateInterfaceTexts(config) {
+            if (!config) return;
+            
+            document.getElementById('texto-color').textContent = config.color + ': ';
+            document.getElementById('texto-libro').textContent = config.libro + ': ';
+            document.getElementById('texto-musica').textContent = config.musica + ': ';
+            document.getElementById('texto-juegos').textContent = config.video_juego + ': ';
+            document.getElementById('texto-lenguajes').textContent = config.lenguajes + ': ';
+            document.getElementById('texto-contacto').textContent = config.email.split('[email]')[0];
+        }
+
+        async function loadStudentProfile(ci) {
+            try {
+                const estudiantesResponse = await fetch('datos/index.json');
+                const estudiantes = extractJSON(await estudiantesResponse.text());
+                if (!estudiantes) return;
+
+                const estudiante = estudiantes.find(e => e.ci == ci);
+                if (!estudiante) return;
+
+                document.getElementById('foto-perfil').src = estudiante.imagen;
+                document.getElementById('nombre-perfil').textContent = estudiante.nombre;
+                document.title = `${estudiante.nombre}`;
+
+                try {
+                    const perfilResponse = await fetch(`datos/${ci}/perfil.json`);
+                    const perfil = extractJSON(await perfilResponse.text());
+                    if (!perfil) return;
+
+                    document.getElementById('descripcion-perfil').textContent = perfil.descripcion || '';
+                    document.getElementById('color-perfil').textContent = perfil.color || '';
+                    document.getElementById('libro-perfil').textContent = perfil.libro || '';
+                    document.getElementById('musica-perfil').textContent = perfil.musica || '';
+                    document.getElementById('juegos-perfil').textContent = perfil.video_juego || '';
+                    document.getElementById('lenguajes-perfil').textContent = perfil.lenguajes || '';
+                    
+                    if (perfil.email) {
+                        document.getElementById('email-perfil').textContent = perfil.email;
+                        document.getElementById('email-perfil').href = `mailto:${perfil.email}`;
+                    }
+                } catch (e) {
+                    console.log('No se encontró perfil específico');
+                }
+            } catch (error) {
+                console.log('Error cargando perfil:', error);
+            }
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const lang = urlParams.get('lang') || 'ES';
+            const ci = urlParams.get('ci');
+
+            // Cargar y aplicar idioma
+            const config = await loadLanguageConfig(lang);
+            updateInterfaceTexts(config);
+
+            if (ci) loadStudentProfile(ci);
+        });
     </script>
 </body>
 </html>

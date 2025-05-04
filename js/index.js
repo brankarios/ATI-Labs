@@ -1,23 +1,25 @@
-// Script para cambiar el idioma
-const LANGUAGE = 'ES'; // Puedes cambiar a 'EN' o 'PT'
+// Script para cambiar el idioma y cargar estudiantes
+const LANGUAGE = 'ES';
 
-async function loadConfig(lang) {
+// Función para extraer JSON de archivos con declaración de variable
+function extractJSON(text) {
+    const match = text.match(/[\{\[]([\s\S]*)[\}\]]/);
+    return match ? JSON.parse(match[0]) : null;
+}
+
+// Cargar configuración de idioma
+async function loadLanguageConfig(lang) {
     try {
         const response = await fetch(`conf/config${lang}.json`);
-        if (!response.ok) throw new Error('Error al cargar el JSON');
-        
-        // Extraemos el contenido JSON del archivo que contiene "const config" para que no nos de error
         const configText = await response.text();
-        const configJsonStr = configText.match(/\{[\s\S]*\}/)[0]; 
-        return JSON.parse(configJsonStr);
+        return extractJSON(configText);
     } catch (error) {
-        console.error('Error cargando el idioma:', error);
+        console.error('Error cargando idioma:', error);
         return null;
     }
 }
 
-async function applyLanguage(lang) {
-    const config = await loadConfig(lang);
+function applyTranslations(config) {
     if (!config) return;
 
     document.querySelectorAll('[data-i18n]').forEach(element => {
@@ -40,23 +42,21 @@ async function applyLanguage(lang) {
     });
 }
 
-// Script para cargar estudiantes
+// Cargar y mostrar estudiantes
 async function loadStudents() {
     try {
         const response = await fetch('datos/index.json');
-        if (!response.ok) throw new Error('Error al cargar los datos de estudiantes');
+        const estudiantesText = await response.text();
+        const estudiantes = extractJSON(estudiantesText);
         
-        // Extremos el array JSON del archivo que contiene "const perfiles" para que no nos de error
-        const studentsText = await response.text();
-        const studentsJsonStr = studentsText.match(/\[[\s\S]*\]/)[0]; 
-        const students = JSON.parse(studentsJsonStr);
+        if (!estudiantes) return;
 
         const studentGrid = document.querySelector('.student-grid');
-        if (!studentGrid) throw new Error('No se encontró el contenedor .student-grid');
+        if (!studentGrid) return;
 
         studentGrid.innerHTML = '';
 
-        students.forEach((student, index) => {
+        estudiantes.forEach((student, index) => {
             const studentCard = document.createElement('div');
             studentCard.className = 'student-card';
 
@@ -71,12 +71,11 @@ async function loadStudents() {
 
             studentCard.appendChild(img);
             studentCard.appendChild(span);
-
             studentGrid.appendChild(studentCard);
         });
 
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error cargando estudiantes:', error);
         const errorElement = document.createElement('p');
         errorElement.textContent = 'No se pudieron cargar los estudiantes. Por favor, recarga la página.';
         errorElement.style.color = 'red';
@@ -86,8 +85,13 @@ async function loadStudents() {
     }
 }
 
-// Inicialización
-document.addEventListener('DOMContentLoaded', () => {
-    applyLanguage(LANGUAGE);
+document.addEventListener('DOMContentLoaded', async () => {
+    // Obtener idioma de la URL o usar el valor por defecto
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || LANGUAGE;
+
+    const config = await loadLanguageConfig(lang);
+    applyTranslations(config);
+
     loadStudents();
 });

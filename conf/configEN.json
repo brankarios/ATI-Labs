@@ -10,7 +10,7 @@ const config = {
 	"musica":"My favorite music style",
 	"video_juego":"Favorite video games",
 	"lenguajes":"Languages learned",
-	"email":"please send me a email to [email], if you need to contact me",
+	"email":"If you need to contact me, please send me an email to [email]",
 	"buscar": "Search",
 	"saludo": "Hi"
 }
