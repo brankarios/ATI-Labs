@@ -1,0 +1,16 @@
+const perfil = {
+	"nombre": "César Carios",
+    "descripcion": "Soy estudiante de la Licenciatura en Computación en la Facultad de Ciencias de la Universidad
+                Central de Venezuela. Actualmente estoy en el 6to semestre de la carrera y me interesan las ramas
+                de bases de datos e inteligencia artificial. También me gusta dar clases, por eso soy preparador
+                de la asignatura Matemáticas Discretas I. En mis ratos libres me gusta leer y hacer deporte.",
+	"color": "Azul/Morado",
+	"libro": "Los Miserables",
+	"musica": "Rock",
+	"video_juego": ["Pokemon","The Legend of Zelda", "Fire Emblem"],
+	"lenguajes": ["C++", "C", "Python", "SQL"],
+	"email": "ccariosmcb@gmail.com",
+	"ci": "30136117",
+	"genero": "Masculino",
+	"fecha_nacimiento": "08/09/2003",
+}
