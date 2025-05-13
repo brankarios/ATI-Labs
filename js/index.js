@@ -45,9 +45,7 @@ function applyTranslations(config) {
 // Script de búsqueda de estudiantes
 async function loadStudents() {
     try {
-        const response = await fetch('datos/index.json');
-        const estudiantesText = await response.text();
-        const estudiantes = extractJSON(estudiantesText);
+        const estudiantes = perfiles; 
         
         if (!estudiantes) return [];
 
@@ -131,7 +129,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get('lang') || LANGUAGE;
 
-    const config = await loadLanguageConfig(lang);
+    let config;
+
+    if(lang.toUpperCase() == 'EN'){
+
+        config = configEN;
+    }
+
+    else if(lang.toUpperCase() == 'PT'){
+
+        config = configPT;
+    }
+
+    else{
+
+        config = configES;
+    }
+
     applyTranslations(config);
 
     const students = await loadStudents();
