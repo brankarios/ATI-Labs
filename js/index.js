@@ -107,6 +107,9 @@ function setupSearch(students, config) {
 
     // Función de búsqueda
     const performSearch = (query) => {
+
+        console.log("This en performSearch (función flecha):", this); 
+
         const filteredStudents = students.filter(student => 
             student.nombre.toLowerCase().includes(query.toLowerCase())
         );
@@ -125,6 +128,10 @@ function setupSearch(students, config) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+    // 'this' aquí se refiere al 'document' que disparó el evento
+    console.log("This en DOMContentLoaded:", this); //
+    
     // Obtener idioma de la URL o usar el valor por defecto
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get('lang') || LANGUAGE;

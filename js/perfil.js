@@ -41,6 +41,9 @@ async function loadStudentProfile(ci) {
 
         perfilJSON.onload = function(){
 
+            // Agregamos un console.log para ver qué es 'this' en este contexto
+            console.log("This en perfilJSON.onload:", this); 
+
             document.getElementById('descripcion-perfil').textContent = perfil.descripcion;
             document.getElementById('color-perfil').textContent = perfil.color;
             document.getElementById('libro-perfil').textContent = perfil.libro;
@@ -98,6 +101,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 //Script para poder ejecutar en local los archivos
 
 window.onload = function(){
+
+    console.log("This en window.onload:", this); // Otro this para el reto 05
 
     const urlParams = new URLSearchParams(window.location.search);
     const ci = urlParams.get('ci');
