@@ -107,9 +107,6 @@ function setupSearch(students, config) {
 
     // Función de búsqueda
     const performSearch = (query) => {
-
-        console.log("This en performSearch (función flecha):", this); 
-
         const filteredStudents = students.filter(student => 
             student.nombre.toLowerCase().includes(query.toLowerCase())
         );
@@ -120,6 +117,11 @@ function setupSearch(students, config) {
             noResultsElement.textContent = `${config.noResults} ${query}`;
         }
     };
+
+    // Evento de búsqueda dinámica
+    searchInput.addEventListener('input', () => {
+        performSearch(searchInput.value.trim());
+    });
 
     searchForm.addEventListener('submit', (e) => {
         e.preventDefault();
