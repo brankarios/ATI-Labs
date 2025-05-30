@@ -28,7 +28,33 @@ async function loadStudentProfile(ci) {
         if (!estudiantes) return;
 
         const estudiante = estudiantes.find(e => e.ci == ci);
-        if (!estudiante) return;
+        
+        if (!estudiante) {
+            // Ocultar el contenedor principal del perfil
+            const contenedor = document.querySelector('.contenedor-principal');
+            if (contenedor) {
+                contenedor.style.display = 'none';
+            }
+
+            // Crear y mostrar el mensaje de error en el cuerpo del documento
+            const errorMsg = document.createElement('div');
+            errorMsg.style.textAlign = 'center';
+            errorMsg.style.padding = '40px';
+            errorMsg.style.color = '#c72e2e';
+            errorMsg.innerHTML = `
+                <h1>Estudiante no encontrado</h1>
+                <p style="font-size: 1.2em;">La cédula de identidad "<strong>${ci}</strong>" no está registrada en el sistema.</p>
+                <p style="margin-top: 20px;">
+                <a href="#" onclick="window.history.back(); return false;" style="text-decoration: none; padding: 10px 20px; background-color: #4a89dc; color: white; border-radius: 5px;">
+                    Volver al perfil anterior
+                </a>
+                </p>
+            `;
+            document.body.appendChild(errorMsg);
+            document.title = "Error - Estudiante no encontrado"; // Cambiar el título de la página
+
+            return; // Detener la ejecución de la función
+        }
 
         const perfilJSON = document.createElement('script');
         perfilJSON.src = `${estudiante["ci"]}/perfil.json`;
