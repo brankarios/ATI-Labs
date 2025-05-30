@@ -75,12 +75,17 @@ function displayStudents(students, config) {
         noResults.style.padding = '20px';
         noResults.style.color = '#666';
         studentGrid.appendChild(noResults);
-        return noResults; 
+        return noResults;
     }
 
     students.forEach((student, index) => {
         const studentCard = document.createElement('div');
         studentCard.className = 'student-card';
+        studentCard.style.cursor = 'pointer'; // Cambia el cursor a pointer
+        studentCard.addEventListener('click', () => {
+            // Redirige a perfil.html con la cédula del estudiante
+            window.location.href = `perfil.html?ci=${student.ci}`;
+        });
 
         const img = document.createElement('img');
         img.className = `student-img student-img${(index % 6) + 1}`;

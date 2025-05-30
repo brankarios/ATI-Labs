@@ -154,6 +154,20 @@ footer {
     color: #2a5caa;
 }
 
+.student-card {
+    cursor: pointer;
+}
+
+.student-card:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* Para que el texto no se seleccione al hacer clic */
+.student-card span {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
