@@ -52,6 +52,40 @@ nav li:nth-child(2) {
     color: #ffffff;
 }
 
+/* Estilos para el selector de idioma */
+.language-selector select {
+    padding: 8px 12px;
+    border: 1px solid #ffffff;
+    border-radius: 20px; /* Bordes más redondeados */
+    background-color: #ffffff;
+    color: rgb(67, 184, 210); /* Color de texto que combine con el header */
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+    -webkit-appearance: none; /* Eliminar el estilo por defecto de los navegadores WebKit */
+    -moz-appearance: none;    /* Eliminar el estilo por defecto para Firefox */
+    appearance: none;         /* Eliminar el estilo por defecto */
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%2343b8d2%22%20d%3D%22M6%209l4-4H2z%22%2F%3E%3C%2Fsvg%3E'); /* Icono de flecha personalizado */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+.language-selector select:hover {
+    background-color: #f0f0f0;
+    border-color: #43b8d2;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.language-selector label {
+    color: #ffffff;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+
 .search-form input[type="text"] {
     padding: 8px;
     border: 1px solid #ddd;
@@ -68,37 +102,45 @@ nav li:nth-child(2) {
     cursor: pointer;
 }
 
+/* MODIFICACIÓN: Estilos para el grid de estudiantes */
 .student-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: grid; /* CAMBIADO de flex a grid */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Columnas responsivas */
+    gap: 8px; /* Espacio horizontal y vertical como en la imagen de ejemplo */
     padding: 8px;
     background-color: white;
-    flex: 1; 
-    align-content: center;
-    justify-content: center;
-  }
+    justify-items: center; /* Centra las tarjetas horizontalmente dentro de sus celdas de grid */
+    align-content: start; /* Alinea el contenido al inicio del contenedor grid */
+}
 
 .student-card {
-    width: 180px;
-    height: 180px; 
+    /* Ajustes para parecerse a la imagen de ejemplo */
+    width: 180px; /* Mantener un ancho fijo para consistencia */
+    height: 180px; /* Altura fija para que todas las tarjetas sean iguales */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 5px;
-    border: 1px solid #b5b1b1;
-    border-radius: 4px;
-    background-color: #d3dbe2;
+    justify-content: center; /* Centra el contenido verticalmente dentro de la tarjeta */
+    padding: 5px; /* Menos padding como en la imagen */
+    border: 1px solid #b5b1b1; /* Borde más oscuro como en la imagen */
+    border-radius: 4px; /* Bordes menos redondeados */
+    background-color: #d3dbe2; /* Fondo gris como en la imagen */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    position: relative;
+    text-align: center; /* Centrar el texto del nombre */
 }
 
 .student-img {
-    width: 100px; 
-    height: 140px; 
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    margin-bottom: 5px;
+    width: 100px; /* Tamaño de imagen rectangular */
+    height: 140px; /* Tamaño de imagen rectangular */
+    object-fit: cover; /* Recorta la imagen para que cubra el área */
+    border-radius: 4px; /* Bordes menos redondeados para la imagen */
+    border: 1px solid #ddd; /* Borde más fino para la imagen */
+    margin-bottom: 5px; /* Menos separación del nombre */
+    box-shadow: none; /* Eliminar sombra de la imagen */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .student-card span {
@@ -121,12 +163,6 @@ footer {
     color: #ffffff;
     font-size: 0.9em;
     background-color: rgb(67, 184, 210);
-}
-
-.student-card {
-    transition: all 0.3s ease-in-out;
-    overflow: hidden;
-    position: relative;
 }
 
 .student-card:hover {
@@ -192,6 +228,7 @@ body{
     display: flex;
     align-items: stretch; 
     gap: 30px;
+    margin-bottom: 20px; /* Añadido espacio para el botón de regreso */
 }
 
 #foto-perfil{
@@ -264,6 +301,37 @@ body{
     color: red; 
 }
 
+/* Estilos para el botón de volver a la lista */
+.back-button {
+    display: block; /* Para que ocupe su propia línea */
+    margin: 20px auto; /* Centrar y darle espacio */
+    padding: 12px 25px;
+    background-color: #007bff; /* Un azul atractivo */
+    color: white;
+    border: none;
+    border-radius: 25px; /* Más redondeado */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra para efecto 3D */
+    transition: all 0.3s ease;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+.back-button:hover {
+    background-color: #0056b3; /* Un azul más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Pequeño efecto de elevación */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.back-button:active {
+    background-color: #004085; /* Color más oscuro al hacer clic */
+    transform: translateY(0); /* Vuelve a su posición original */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
 /* Media queries */
 
 /* Dispositivos móviles */
@@ -313,11 +381,21 @@ body{
     .email-link{
      font-size: 10px;
     }
+
+    .language-selector select {
+        font-size: 12px; /* Ajusta tamaño en móviles */
+        padding: 6px 10px;
+    }
+
+    .back-button {
+        padding: 10px;
+        font-size: 14px;
+    }
 }
 
 /* Ipads y tablets */
 
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 481px) and (max-width: 768px) {
     .contenedor-principal{
         flex-direction: column; 
         align-items: center; 

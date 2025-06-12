@@ -9,5 +9,5 @@ const perfil = {
 	"email": "ccariosmcb@gmail.com",
 	"ci": "30136117",
 	"genero": "Masculino",
-	"fecha_nacimiento": "08/09/2003",
+	"fecha_nacimiento": "08/09/2003"
 }

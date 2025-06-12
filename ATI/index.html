@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="sitio">ATI[UCV] 2025-1</title>
+    <link rel="icon" href="http://www.ciens.ucv.ve/portalasig2/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/ATI/css/style.css"> 
+    <!-- IMPORTANTE: SE ELIMINARON LAS CARGAS DIRECTAS DE JSON Y SCRIPTS NO SPA -->
+</head>
+
+<body class="bodyIndex">
+    <header>
+        <nav>
+            <ul>
+                <li> 
+                    <strong class="header-title" data-i18n="sitio">ATI<span class="ucv">[UCV]</span> 2025-1</strong>
+                </li>
+                <li>
+                    <span data-i18n="saludo">Hola</span>
+                </li>
+                <li>
+                    <!-- Selector de Idioma -->
+                    <div class="language-selector">
+                        <label for="lang-select">Idioma:</label>
+                        <select id="lang-select" onchange="changeLanguage(this.value)">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                            <option value="pt">Português</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <form class="search-form">
+                        <input type="text" id="search-input" placeholder="Nombre..." data-i18n-placeholder="nombre">
+                        <input type="submit" data-i18n-value="buscar" value="Buscar">
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+    
+        <!-- ESTE ES TU DIV.STUDENT-GRID ORIGINAL -->
+        <!-- AHORA HAY 36 DIVS PARA ASEGURAR ESPACIO PARA TODOS TUS 29 ESTUDIANTES -->
+        <div id="student-grid" class="student-grid">
+            <!-- Bloque de 12 tarjetas (duplicado 3 veces para 36 en total) -->
+            <div class="student-card">
+                <img src="" class="student-img principal-student">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span>  </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span>  </span>
+            </div>
+            <!-- SEGUNDO BLOQUE DE 12 TARJETAS -->
+            <div class="student-card">
+                <img src="" class="student-img">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span>  </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span>  </span>
+            </div>
+            <!-- TERCER BLOQUE DE 12 TARJETAS -->
+            <div class="student-card">
+                <img src="" class="student-img">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span></span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span>  </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span> </span>
+            </div>
+            <div class="student-card">
+                <img src="" alt="" class="student-img">
+                <span>  </span>
+            </div>
+        </div>
+
+        <!-- CONTENEDOR PRINCIPAL PARA EL PERFIL DETALLADO DEL ESTUDIANTE -->
+        <div id="profile-details-section" class="contenedor-principal" style="display: none;">
+            <img src="" alt="Foto de perfil" id="foto-perfil">
+
+            <div class="cuadro-texto">
+                <div class="nombre" id="nombre-perfil"></div>
+                <p class="descripcion" id="descripcion-perfil"></p>
+
+                <div class="detalles">
+                    <ul>
+                        <li><span id="texto-ci"></span><span id="ci-perfil"></span></li>
+                        <li><span id="texto-color"></span><span id="color-perfil"></span></li>
+                        <li><span id="texto-libro"></span><span id="libro-perfil"></span></li>
+                        <li><span id="texto-musica"></span><span id="musica-perfil"></span></li>
+                        <li><span id="texto-juegos"></span><span id="juegos-perfil"></span></li>
+                        <li><strong id="texto-lenguajes"></strong><span id="lenguajes-perfil"></span></li>
+                    </ul>
+                </div>
+
+                <div class="contacto">
+                    <span id="texto-contacto"></span>
+                    <a href="" class="email-link" id="email-perfil"></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer data-i18n="copyRight">
+        Copyright © 2025 Escuela de computación - ATI. Todos los derechos reservados
+    </footer>
+    <script src="/ATI/js/main.js"></script> 
+</body>
+</html>
