@@ -1,32 +1,24 @@
-// ATI-Labs/js/main.js
-
-// Variables globales para la aplicación SPA
-let allStudents = []; // Almacena la lista completa de estudiantes
-let currentLangConfig = {}; // Almacena la configuración de idioma actual
-let profileTemplateHtml = ''; // Almacenará el HTML de perfil.html para inyección dinámica
+let allStudents = []; 
+let currentLangConfig = {}; 
+let profileTemplateHtml = ''; 
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DEBUG_JS: DOMContentLoaded ha sido disparado.');
 
-    // Carga el idioma preferido al inicio
     const preferredLang = sessionStorage.getItem('preferredLang') || 'es';
     console.log(`DEBUG_JS: Idioma preferido detectado: ${preferredLang}`);
     await changeLanguage(preferredLang); 
     console.log('DEBUG_JS: changeLanguage completado.');
 
-    // Carga la lista de estudiantes
     console.log('DEBUG_JS: Iniciando loadStudentList().');
     await loadStudentList(); 
     console.log('DEBUG_JS: loadStudentList() completado.');
 
-    // Carga la plantilla HTML del perfil una sola vez
     await loadProfileTemplate();
 
-    // Configura el evento de búsqueda
     console.log('DEBUG_JS: Configurando búsqueda.');
     setupSearch();
 
-    // Notificar al servidor de la visita (para el contador de sesión)
     console.log('DEBUG_JS: Enviando solicitud de visita.');
     fetch('/ATI/api/visit') 
         .then(response => response.json())
@@ -34,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         .catch(error => console.error('Error al registrar visita:', error));
 });
 
-// Función para cargar el HTML de perfil.html como una plantilla
 async function loadProfileTemplate() {
     try {
         console.log('DEBUG_JS: Cargando plantilla de perfil desde /ATI/perfil.html');
@@ -44,12 +35,11 @@ async function loadProfileTemplate() {
         }
         profileTemplateHtml = await response.text();
         console.log('DEBUG_JS: Plantilla de perfil cargada. Longitud:', profileTemplateHtml.length);
-        if (profileTemplateHtml.length < 50) { // Un umbral arbitrario para verificar si no está vacía
+        if (profileTemplateHtml.length < 50) { 
             console.warn('DEBUG_JS_WARN: La plantilla de perfil parece muy corta o vacía.');
         }
     } catch (error) {
         console.error('DEBUG_JS_ERROR: Error al cargar la plantilla de perfil:', error);
-        // Podrías poner un mensaje de error en la sección de perfil si la plantilla no carga
         const profileDetailsSection = document.getElementById('profile-details-section');
         if (profileDetailsSection) {
             profileDetailsSection.innerHTML = `<p style="text-align: center; color: red;">${currentLangConfig.error_loading_profile_template || 'Error al cargar la plantilla del perfil.'}</p>`;
@@ -57,7 +47,6 @@ async function loadProfileTemplate() {
     }
 }
 
-// Función de utilidad para cambiar el color del link (se mantiene aquí)
 function changeLinkColor(link){
     link.style.color = 'red'; 
 }
@@ -79,12 +68,11 @@ async function changeLanguage(lang_code) {
         }
         const data = await response.json();
         if (data.config) {
-            currentLangConfig = data.config; // Almacena la configuración globalmente
+            currentLangConfig = data.config; 
             sessionStorage.setItem('langConfig', JSON.stringify(data.config));
             updateTextContent(); 
             console.log('DEBUG_JS: Configuración de idioma cargada y aplicada.');
 
-            // Si el perfil está visible, actualiza sus textos
             const profileDetailsSection = document.getElementById('profile-details-section');
             if (profileDetailsSection && profileDetailsSection.style.display !== 'none') {
                 updateProfileTexts(currentLangConfig);
@@ -160,12 +148,10 @@ function displayStudents(studentsToDisplay, config) {
         return;
     }
 
-    // Asegura que el contenedor de la cuadrícula siempre tenga display: grid
     studentGrid.style.display = 'grid'; 
 
     const allCards = studentGrid.querySelectorAll('.student-card'); 
 
-    // Oculta todas las tarjetas inicialmente
     allCards.forEach(card => card.style.display = 'none');
 
     if (studentsToDisplay.length === 0) {
@@ -186,10 +172,9 @@ function displayStudents(studentsToDisplay, config) {
     studentsToDisplay.forEach((student, index) => {
         if (index < allCards.length) { 
             const studentCard = allCards[index];
-            studentCard.style.display = 'flex'; // REINSERTADO: Asegura que cada tarjeta individualmente sea un contenedor flex
-            studentCard.innerHTML = ''; // Limpia el contenido previo
+            studentCard.style.display = 'flex'; 
+            studentCard.innerHTML = ''; 
 
-            // Asegura que el evento click se asigne solo una vez o se reasigne
             const oldClickListener = studentCard._clickListener;
             if (oldClickListener) {
                 studentCard.removeEventListener('click', oldClickListener);
@@ -199,7 +184,7 @@ function displayStudents(studentsToDisplay, config) {
                 showProfileDetails(student.id); 
             };
             studentCard.addEventListener('click', newClickListener);
-            studentCard._clickListener = newClickListener; // Guarda la referencia
+            studentCard._clickListener = newClickListener; 
 
             const img = document.createElement('img');
             img.src = student.photo || 'https://placehold.co/100x100/CCCCCC/000000?text=No+Photo'; 
@@ -221,7 +206,6 @@ function displayStudents(studentsToDisplay, config) {
         }
     });
 
-    // Ocultar cualquier tarjeta sobrante que no se haya rellenado con un estudiante
     for (let i = studentsToDisplay.length; i < allCards.length; i++) {
         allCards[i].style.display = 'none';
     }
@@ -229,7 +213,6 @@ function displayStudents(studentsToDisplay, config) {
     console.log('DEBUG_JS: Tarjetas de estudiantes renderizadas en el DOM.');
 }
 
-// Nueva función para mostrar los detalles del perfil
 async function showProfileDetails(ci) {
     console.log(`DEBUG_JS: showProfileDetails(${ci}) llamado.`);
     const studentGrid = document.getElementById('student-grid');
@@ -240,12 +223,9 @@ async function showProfileDetails(ci) {
         return;
     }
 
-    // Oculta la lista de estudiantes
     studentGrid.style.display = 'none';
-    // Muestra la sección de detalles del perfil
-    profileDetailsSection.style.display = 'flex'; // o 'block' o 'grid' dependiendo de tu CSS
+    profileDetailsSection.style.display = 'flex'; 
 
-    // Muestra un mensaje de carga mientras se obtienen los datos
     profileDetailsSection.innerHTML = `<p style="text-align: center;">${currentLangConfig.loading_profile || 'Cargando perfil...'}</p>`;
 
     try {
@@ -265,12 +245,9 @@ async function showProfileDetails(ci) {
 
         console.log('DEBUG_JS: Perfil cargado:', estudiante);
 
-        // Inyecta la plantilla HTML del perfil en la sección
-        // Usa innerHTML = '' para limpiar el contenido anterior, luego insertAdjacentHTML
         profileDetailsSection.innerHTML = ''; 
         profileDetailsSection.insertAdjacentHTML('afterbegin', profileTemplateHtml); 
 
-        // ¡IMPORTANTE! Obtén la referencia al contenedor principal dentro de la sección de perfil
         const profileContainer = profileDetailsSection.querySelector('.contenedor-principal');
         if (!profileContainer) {
             console.error('DEBUG_JS_ERROR: No se encontró el contenedor principal del perfil después de inyectar la plantilla.');
@@ -278,15 +255,6 @@ async function showProfileDetails(ci) {
             return;
         }
 
-        // --- Nuevos logs de depuración para verificar elementos ---
-        console.log('DEBUG_JS: profileContainer existe y es:', profileContainer);
-        console.log('DEBUG_JS: Contenido HTML del profileContainer después de inyección (primeros 200 chars):', profileContainer.innerHTML.substring(0, 200));
-        console.log('DEBUG_JS: ¿Tiene hijos el profileContainer?', profileContainer.children.length > 0);
-        console.log('DEBUG_JS: Elemento #foto-perfil directamente después de querySelector:', profileContainer.querySelector('#foto-perfil'));
-        // --- Fin de nuevos logs ---
-
-        // Actualiza los elementos HTML con los datos del estudiante usando querySelector en el contenedor
-        // Añadidas comprobaciones de null para evitar TypeError si el elemento no se encuentra
         const fotoPerfil = profileContainer.querySelector('#foto-perfil');
         if (fotoPerfil) {
             fotoPerfil.src = estudiante.photo || 'https://placehold.co/150x150/CCCCCC/000000?text=No+Photo';
@@ -308,14 +276,6 @@ async function showProfileDetails(ci) {
         } else {
             console.warn('DEBUG_JS_WARN: Elemento #descripcion-perfil no encontrado en la plantilla de perfil.');
         }
-
-        // La cédula de identidad ha sido eliminada por tu solicitud
-        // const ciPerfil = profileContainer.querySelector('#ci-perfil');
-        // if (ciPerfil) {
-        //     ciPerfil.textContent = estudiante.ci || 'No especificada'; 
-        // } else {
-        //     console.warn('DEBUG_JS_WARN: Elemento #ci-perfil no encontrado en la plantilla de perfil.');
-        // }
 
         const colorPerfil = profileContainer.querySelector('#color-perfil');
         if (colorPerfil) {
@@ -368,15 +328,12 @@ async function showProfileDetails(ci) {
             console.warn('DEBUG_JS_WARN: Elemento #texto-contacto no encontrado en la plantilla de perfil.');
         }
 
-
-        // Añadir botón para regresar a la lista (se añade a la sección principal, no al contenedor inyectado)
         const backButton = document.createElement('button');
         backButton.textContent = currentLangConfig.back_to_list || 'Volver a la lista';
         backButton.className = 'back-button'; 
         backButton.onclick = showStudentList;
         profileDetailsSection.appendChild(backButton); 
 
-        // Actualizar textos I18N específicos del perfil después de inyectar el HTML
         updateProfileTexts(currentLangConfig);
 
     } catch (error) {
@@ -385,24 +342,19 @@ async function showProfileDetails(ci) {
     }
 }
 
-// Función para volver a mostrar la lista de estudiantes
 function showStudentList() {
     console.log('DEBUG_JS: Volviendo a la lista de estudiantes.');
     const studentGrid = document.getElementById('student-grid');
     const profileDetailsSection = document.getElementById('profile-details-section');
 
     if (studentGrid) {
-        studentGrid.style.display = 'grid'; // Asegura que la cuadrícula se muestre como grid
-        // Opcional: Forzar un reflow para asegurar que el layout se recalcule
+        studentGrid.style.display = 'grid'; 
         studentGrid.offsetWidth; 
     }
     if (profileDetailsSection) profileDetailsSection.style.display = 'none';
 
-    // Para asegurar que todas las tarjetas se muestren si están cargadas
     const allCards = studentGrid.querySelectorAll('.student-card');
     allCards.forEach(card => {
-        // Solo mostrar si el estudiante correspondiente a esa tarjeta está en la lista actual de estudiantes
-        // Esto previene que se muestren tarjetas vacías si el número de estudiantes es menor que el de tarjetas pre-existentes
         const cardIndex = Array.from(allCards).indexOf(card);
         if (cardIndex < allStudents.length) { // allStudents contiene los estudiantes filtrados o completos
             card.style.display = 'flex'; 
@@ -466,7 +418,6 @@ function setupSearch() {
     }
 }
 
-// Función para actualizar los textos de la interfaz principal (header, footer, títulos)
 function updateTextContent() {
     console.log('DEBUG_JS: updateTextContent() llamado. Actualizando textos I18N.');
     const langConfig = currentLangConfig; 
@@ -513,23 +464,18 @@ function updateTextContent() {
     }
 }
 
-// Nueva función para actualizar los textos dentro de la sección de perfil
-// Se llama después de inyectar el HTML del perfil
+
 function updateProfileTexts(config) {
     const profileSection = document.getElementById('profile-details-section');
     if (!profileSection) return;
 
-    // ¡IMPORTANTE! Obtén la referencia al contenedor principal dentro de la sección de perfil
     const profileContainer = profileSection.querySelector('.contenedor-principal');
     if (!profileContainer) {
         console.error('DEBUG_JS_ERROR: No se encontró el contenedor principal del perfil al actualizar textos.');
         return;
     }
 
-    // Eliminado el acceso al elemento #texto-ci
-    // const textCiElem = profileContainer.querySelector('#texto-ci');
-    // if (textCiElem) textCiElem.textContent = (config.ci_label || 'C.I.') + ': ';
-
+   
     const textColorElem = profileContainer.querySelector('#texto-color');
     if (textColorElem) textColorElem.textContent = (config.color || 'Mi color favorito es') + ': ';
 
@@ -554,7 +500,6 @@ function updateProfileTexts(config) {
 }
 
 
-// Funciones auxiliares para cookies (se mantienen sin cambios)
 function setCookie(name, value, days) {
     let expires = "";
     if (days) {

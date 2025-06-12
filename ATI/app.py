@@ -1,37 +1,26 @@
-# mi_proyecto_spa/app.py
-
 from flask import Flask, request, session, jsonify, send_from_directory
 import json
 import os
-import re # Importar el módulo de expresiones regulares
+import re 
 
 app = Flask(__name__)
-# Es crucial para la seguridad de las sesiones en Flask. ¡Mantén este secreto!
 app.secret_key = os.urandom(24) 
 
-# --- Rutas de Carpetas de Datos dentro del contenedor ---
-# La raíz de tu proyecto dentro del contenedor (donde se copian tus archivos: app.py, index.html, css/, js/, etc.)
 PROJECT_ROOT_IN_CONTAINER = '/opt/web_cache_pty_app/ATI' 
 
-# La carpeta 'conf' está dentro de la raíz del proyecto
 CONFIG_FOLDER = os.path.join(PROJECT_ROOT_IN_CONTAINER, 'conf')
-# La base de datos de estudiantes (carpetas numeradas) está en la raíz del proyecto
 STUDENT_DATA_BASE_FOLDER = PROJECT_ROOT_IN_CONTAINER 
 
-# Función auxiliar para extraer el JSON de una cadena de texto que contiene 'const var = {...}'
 def extract_json_from_js_var(text):
     """
     Extrae el objeto JSON de una cadena que contiene una declaración de variable JavaScript
     como 'const varName = { ... };'.
     """
-    # Expresión regular para encontrar un objeto JSON {} o un array JSON []
-    # después de 'const variableName = '
-    # Este regex es más robusto para capturar el contenido del objeto/array
     match = re.search(r'=\s*(?P<json_content>\{[\s\S]*\}|\[[\s\S]*\]);?\s*$', text.strip())
     if match:
-        json_string = match.group('json_content') # Captura solo el contenido del JSON
+        json_string = match.group('json_content') 
         return json.loads(json_string)
-    return None # Retorna None si no se encuentra un JSON válido
+    return None 
 
 def load_language_config(lang_code):
     """
@@ -43,15 +32,13 @@ def load_language_config(lang_code):
         with open(lang_file, 'r', encoding='utf-8') as f:
             content = f.read()
             config = extract_json_from_js_var(content)
-            if config is None: # Si la extracción falla, intenta como JSON puro
+            if config is None: 
                 config = json.loads(content) 
             return config
     except FileNotFoundError:
         print(f"DEBUG_FLASK_ERROR: Archivo de idioma no encontrado para {lang_code} en {lang_file}.")
         if lang_code.lower() == 'es': 
             return {} 
-        # Si no se encuentra el archivo, y no es español, intenta cargar español como fallback.
-        # Asegúrate de no entrar en un bucle infinito si 'es' tampoco existe.
         try:
             with open(os.path.join(CONFIG_FOLDER, 'configES.json'), 'r', encoding='utf-8') as f:
                 content_es = f.read()
@@ -81,26 +68,22 @@ def load_student_profile(student_id):
         with open(profile_json_path, 'r', encoding='utf-8') as f:
             content = f.read()
             profile_data = extract_json_from_js_var(content)
-            if profile_data is None: # Si la extracción falla, intenta como JSON puro
+            if profile_data is None: 
                 profile_data = json.loads(content)
         
-        # --- Manejo de múltiples extensiones de imagen ---
         found_photo_path = None
-        # Orden de preferencia para las extensiones de imagen
         photo_extensions = ['.jpg', '.png', '.jpeg'] 
         for ext in photo_extensions:
             potential_photo_file = f'{student_id}{ext}'
             potential_full_path = os.path.join(student_folder, potential_photo_file)
             if os.path.exists(potential_full_path):
-                # Si se encuentra, construye la URL para el frontend bajo /ATI/
                 found_photo_path = f'/ATI/{student_id}/{potential_photo_file}'
-                break # Una vez encontrada, salimos del bucle
+                break 
 
         if found_photo_path:
             profile_data['photo'] = found_photo_path
         else:
             print(f"DEBUG_FLASK_WARN: No se encontró foto para el estudiante {student_id} en {student_folder} con extensiones {photo_extensions}. Usando placeholder.")
-            # Fallback a una imagen de placeholder si no se encuentra ninguna foto
             profile_data['photo'] = 'https://placehold.co/150x150/CCCCCC/000000?text=No+Photo'
         
         return profile_data
@@ -120,7 +103,6 @@ def get_all_student_ids():
     """
     student_ids = []
     try:
-        # Lista los contenidos de la carpeta base del proyecto
         contents = os.listdir(STUDENT_DATA_BASE_FOLDER)
         print(f"DEBUG_FLASK: Contenido de {STUDENT_DATA_BASE_FOLDER}: {contents}")
     except FileNotFoundError:
@@ -132,9 +114,7 @@ def get_all_student_ids():
 
     for item in contents: 
         item_path = os.path.join(STUDENT_DATA_BASE_FOLDER, item)
-        # Solo considera directorios que son puramente numéricos (IDs de estudiantes)
         if os.path.isdir(item_path) and item.isdigit():
-            # Intenta cargar el perfil para validar su existencia y formato
             profile = load_student_profile(item) 
             if profile:
                 student_ids.append(item)
@@ -169,8 +149,8 @@ def get_students_list():
         if profile:
             students_info.append({
                 'id': sid,
-                'name': profile.get('nombre', f'Estudiante {sid}'), # Usar 'nombre' de tu perfil.json
-                'photo': profile.get('photo', '') # Asegúrate de que la URL de la foto se envía
+                'name': profile.get('nombre', f'Estudiante {sid}'), 
+                'photo': profile.get('photo', '') 
             })
     print(f"DEBUG_FLASK: Retornando lista de estudiantes: {len(students_info)} encontrados.")
     return jsonify(students=students_info)
@@ -209,8 +189,6 @@ def handle_visit():
     print(f"DEBUG_FLASK: Visita registrada. Total: {session['visits']}.")
     return jsonify(visits=session['visits'])
 
-# Este es el manejador genérico para archivos estáticos, incluyendo perfil.html, css, js, y las imágenes
-# CORRECCIÓN: La ruta para archivos estáticos debe apuntar a la base del proyecto en el contenedor
 @app.route('/<path:filename>')
 def serve_static(filename):
     print(f"DEBUG_FLASK: Sirviendo archivo estático: {filename} desde: {PROJECT_ROOT_IN_CONTAINER}")
@@ -223,7 +201,6 @@ def serve_static(filename):
         print(f"DEBUG_FLASK_ERROR: Error al servir archivo estático '{filename}': {e}")
         return "Error interno del servidor.", 500
 
-# Para mod_wsgi, la aplicación principal debe llamarse 'application'
 application = app
 
 if __name__ == '__main__':
